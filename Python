@@ -1,1 +1,64 @@
-Code goes here
+a = ["a",["b", "d", "e", "h", "i"]]
+b = ["b",["a", "c" ,"d" ,"h", "i"]]
+c = ["c",["b", "d"]]
+d = ["d",["a", "b" ,"c" , "e", "f" ,"h" ,"i"]]
+e = ["e",["a", "b"]]
+f = ["f",["d", "g", "h", "i"]]
+g = ["g",["f", "h"]]
+h = ["h",["a", "b", "d" , "f", "g" , "i"]]
+i = ["i",["a", "b" , "d" , "f" , "h"]]
+students  = [a, b , c , d , e , f , g , h, i]
+groups = []
+block = []
+number_connections = []
+matrix = []
+max_per_group = 2
+
+for i in range(len(students)):
+	matrix.append(students[i])
+	number_connections.append(len(matrix[i][1]))
+	block.append([])
+	groups.append([])
+
+
+def assignGroup(actual):
+	flag = False
+	while not flag:
+		i = 0
+		if i not in block[actual] and len(groups[i])<=3:
+			groups[i].append(matrix[actual][0])
+			flag = True
+		else:
+			i+=1
+
+	del number_connections[actual]
+	del matrix[actual]
+	del block[actual]
+j = 1
+while len(matrix) > 0:
+	
+	print "vuelta",
+	print j,
+	j=j+1
+	print 0 not in number_connections
+	print number_connections
+	print max(number_connections)
+	aux = max(number_connections)
+	print number_connections.index(aux)
+	# Check if there are no students with no connections left.
+	if 0 not in number_connections:
+		# Look for the max value and find its index. Store it in actual.
+		aux = max(number_connections)
+		actual = number_connections.index(aux)
+		print block
+		# Transfer the student with the most connections to the first available group.
+		assignGroup(actual)
+		print number_connections
+		print matrix
+
+	else:
+		actual = number_connections.index(0)
+		# Transfer the student with no connections to the first available group.
+		assignGroup(actual)
+
+
