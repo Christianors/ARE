@@ -1,3 +1,39 @@
+
+students = []
+max_per_group = raw_input("Elige el numero de salones disponibles en la escuela")
+flag = False
+while not flag:
+	y = raw_input("Si deseas agregar a un alumno, ingresa su nombre. De lo contrario solo presiona enter ")
+	if not y:
+		break
+	else:
+		z = [y,[]]
+		students.append(z)
+	    	while not flag:
+			    x = raw_input("Si deseas agregar una relacion para el/ella, escribe el nombre del otro alumno. De lo contrario solo presiona enter ")
+			    if not x:
+			    	break
+			    else:
+			    	students[len(students)-1][1].append(x)
+
+'''
+students = []
+flag = False
+while not flag:
+	try:
+    		y=[raw_input("Si deseas agregar a un alumno, ingresa su nombre. De lo contrario solo presiona enter"),[]]
+    		students.append(y)
+	    	while not flag:
+	    		try:
+		    	    	x = raw_input("Si deseas agregar una relacion para el/ella, escribe el nombre del otro alumno. De lo contrario solo presiona enter")
+		    	    	students[len(students)-1][1].append(x)
+	    		except ValueError:
+	    			flag = True
+	except ValueError:
+	    flag = True
+'''
+
+'''
 a = ["a",["b", "d", "e", "h", "i"]]
 b = ["b",["a", "c" ,"d" ,"h", "i"]]
 c = ["c",["b", "d"]]
@@ -8,11 +44,11 @@ g = ["g",["f", "h"]]
 h = ["h",["a", "b", "d" , "f", "g" , "i"]]
 i = ["i",["a", "b" , "d" , "f" , "h"]]
 students  = [a, b , c , d , e , f , g , h, i]
+'''
 groups = []
 block = []
 number_connections = []
 matrix = []
-max_per_group = 2
 
 for i in range(len(students)):
 	matrix.append(students[i])
@@ -79,6 +115,12 @@ while len(matrix) > 0:
 		'''
 		assignGroup(actual)
 		
-
-print groups
+def respuesta():
+	for i in range(len(groups)):
+		if len(groups[i])>0: 
+			print "En el grupo",
+			print (i+1),
+			print "estan los alumnos:",
+			print groups[i]
+respuesta()
 
