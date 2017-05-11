@@ -1,68 +1,61 @@
+f = open('altaDatos', 'r')
+aux = []
+for item in f:
+	aux.append(item[:-1])
+f.close()
 
-students = []
-max_per_group = raw_input("Elige el numero de salones disponibles en la escuela")
-flag = False
-while not flag:
-	y = raw_input("Si deseas agregar a un alumno, ingresa su nombre. De lo contrario solo presiona enter ")
-	if not y:
-		break
-	else:
-		z = [y,[]]
-		students.append(z)
-	    	while not flag:
-			    x = raw_input("Si deseas agregar una relacion para el/ella, escribe el nombre del otro alumno. De lo contrario solo presiona enter ")
-			    if not x:
-			    	break
-			    else:
-			    	students[len(students)-1][1].append(x)
+mat = []
+mats = []
+for i in range(1,len(aux)):
+	if aux[i] != "" and aux[i-1] != "" and aux[1] != "Lista":
+		if aux[i] not in mat:
+			mat.append(aux[i])
+for i in mat:
+	mats.append([i])
 
-'''
-students = []
-flag = False
-while not flag:
-	try:
-    		y=[raw_input("Si deseas agregar a un alumno, ingresa su nombre. De lo contrario solo presiona enter"),[]]
-    		students.append(y)
-	    	while not flag:
-	    		try:
-		    	    	x = raw_input("Si deseas agregar una relacion para el/ella, escribe el nombre del otro alumno. De lo contrario solo presiona enter")
-		    	    	students[len(students)-1][1].append(x)
-	    		except ValueError:
-	    			flag = True
-	except ValueError:
-	    flag = True
-'''
 
-'''
-a = ["a",["b", "d", "e", "h", "i"]]
-b = ["b",["a", "c" ,"d" ,"h", "i"]]
-c = ["c",["b", "d"]]
-d = ["d",["a", "b" ,"c" , "e", "f" ,"h" ,"i"]]
-e = ["e",["a", "d"]]
-f = ["f",["d", "g", "h", "i"]]
-g = ["g",["f", "h"]]
-h = ["h",["a", "b", "d" , "f", "g" , "i"]]
-i = ["i",["a", "b" , "d" , "f" , "h"]]
-students  = [a, b , c , d , e , f , g , h, i]
-'''
-groups = []
+subjects = []
+numAlum = 0
+materias = []
+for i in range(1,len(aux)):
+	if aux[i-1] == "":
+		j=i+1
+		while aux[j] != "" and j<len(aux)-1:
+			materias.append(aux[j])
+			j+=1
+		subjects.append(materias)
+		materias = []
+
+relaciones = []
+for i in mats:
+	for j in subjects:
+		if i[0] in j:
+			for k in j:
+				if k != i[0] and k not in relaciones:
+					relaciones.append(k)
+	i.append(relaciones)
+	relaciones = []
+
+number_classrooms = int(aux[0])
+
+times = []
 block = []
 number_connections = []
 matrix = []
 
-for i in range(len(students)):
-	matrix.append(students[i])
+for i in range(len(mats)):
+	matrix.append(mats[i])
 	number_connections.append(len(matrix[i][1]))
 	block.append([])
-	groups.append([])
+	times.append([])
 
 
 def assignGroup(actual):
 	flag = False
 	i = 0
 	while not flag:
-		if i not in block[actual] and len(groups[i])<max_per_group:
-			groups[i].append(matrix[actual][0])
+		if i not in block[actual] and len(times[i])<number_classrooms:
+			times[i].append(matrix[actual][0])
 
 			#Eliminar todas las dependencias que hacen referencia a este que se elimina.
 			for j in range(len(matrix)):
@@ -78,49 +71,33 @@ def assignGroup(actual):
 	del block[actual]
 
 while len(matrix) > 0:
-	# Check if there are no students with no connections left.
+	# Check if there are no mats with no connections left.
 	if 0 not in number_connections:
 		# Look for the max value and find its index. Store it in actual.
 		aux = max(number_connections)
 		actual = number_connections.index(aux)
 		# Transfer the student with the most connections to the first available group.
-		'''
-		print "Grupos: ",
-		print groups
-		print "Matriz: ",
-		print matrix
-		print "Bloqueos: ",
-		print block
-		print "Conecciones: ",
-		print number_connections
-		print "BreakN"
-		print ""
-		'''
 		assignGroup(actual)
 		
 	else:
 		actual = number_connections.index(0)
 		# Transfer the student with no connections to the first available group.
-		'''
-		print "Grupos: ",
-		print groups
-		print "Matriz: ",
-		print matrix
-		print "Bloqueos: ",
-		print block
-		print "Conecciones: ",
-		print number_connections
-		print "BreakDE0"
-		print ""
-		'''
 		assignGroup(actual)
 		
 def respuesta():
-	for i in range(len(groups)):
-		if len(groups[i])>0: 
-			print "En el grupo",
-			print (i+1),
-			print "estan los alumnos:",
-			print groups[i]
+	for i in range(len(times)):
+		if len(times[i])>0: 
+			print "A las",
+			print i+7,
+			print ":00 hrs",
+			print ""
+			for j in range(len(times[i])):
+				print "Salon",
+				print j+1,
+				print times[i][j],
+				print ""
+		print ""
+		print ""
+
 respuesta()
 
